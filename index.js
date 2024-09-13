@@ -28,8 +28,11 @@ const port = process.env.SERVERPORT;
 const UserRoutes = require('./src/routes/user.route')
 app.use('/user', UserRoutes);
 
-const CheckinRoutes = require('./src/routes/checkin.route')
-app.use('/checkin', CheckinRoutes);
+const ProductRoutes = require('./src/routes/products.route')
+app.use('/products', ProductRoutes);
+
+// const CheckinRoutes = require('./src/routes/checkin.route')
+// app.use('/checkin', CheckinRoutes);
 
 // listen to the port
 app.listen(port, () => {
