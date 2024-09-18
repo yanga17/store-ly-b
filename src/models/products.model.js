@@ -28,12 +28,12 @@ var Products = function (user) {
     this.Client_ID = user.Client_ID,
     this.Product_Image = user.Product_Image
 
-};
+}; 
 
 Products.getProducts = (result) => {
-    dbConn.query('SELECT idx, Stockcode, Product_Description, Category, DepNum, SubNum, Soh, VarPrc, VatPerc, Discount, ExclCost, Markup, GPPerc, ExclSell, ExclSell2, ExclSell3, Markup2, GPPerc2, Markup3, GPPerc3, IncSell, IncSell2, ROS, Discount_Expiry, Client_ID, Product_Image FROM store_loyalty.tblproducts', (err, res) => {
+    dbConn.query('SELECT idx, Stockcode, Product_Description, Category, DepNum, SubNum, Soh, VarPrc, VatPerc, Discount, ExclCost, Markup, GPPerc, ExclSell, ExclSell2, ExclSell3, Markup2, GPPerc2, Markup3, GPPerc3, IncSell, IncSell2, ROS, Discount_Expiry, Special, Special_ExpiryDate, Client_ID, Product_Image FROM store_loyalty.tblproducts', (err, res) => {
         if (!(err === null)) {
-            console.log('Error while getting user data: ' + err);
+            console.log('Error while getting all products ' + err);
             result(null, err);
         } else {
             result(null, res);
@@ -41,14 +41,25 @@ Products.getProducts = (result) => {
     })
 }
 
-Products.addProduct = (req, result) => {
-    const { productDescription, category, stockcode, soh, discount, discountExpiry, exclCost, exclSell, incSell } = req.body;
-    dbConn.query('INSERT INTO store_loyalty.tblproducts(Product_Description, Category, Stockcode, Soh, Discount, Discount_Expiry, ExclCost, ExclSell, IncSell) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [productDescription, category, stockcode, soh, discount, discountExpiry, exclCost, exclSell, incSell], (err, res) => {
+Products.setProductDiscount = (req, result) => {
+    dbConn.query('UPDATE store_loyalty.tblproducts SET VatPerc = ?, Discount_Expiry = ? WHERE idx = ?', [req.params.vatPerc, req.params.expiryDate, req.params.idx], (err, res) => {
         if (err) {
-            console.log('Error while inserting a New Product:' + err);
+            console.log('Error while updating the Products Discount value' + err);
             result(null, err);
         } else {
-            console.log('New Product has been added Successfully:', res);
+            console.log('Updated the Products discount value Successfully:', res);
+            result(null, res);
+        }
+    });
+}
+
+Products.setProductSpecial = (req, result) => {
+    dbConn.query('UPDATE store_loyalty.tblproducts SET Special = ?, Special_ExpiryDate = ? WHERE idx = 1', [req.params.special, req.params.expirydate, req.params.idx], (err, res) => {
+        if (err) {
+            console.log('Error while updating the Products Discount value' + err);
+            result(null, err);
+        } else {
+            console.log('Updated the Products discount value Successfully:', res);
             result(null, res);
         }
     });
