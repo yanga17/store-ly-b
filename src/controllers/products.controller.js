@@ -24,14 +24,38 @@ exports.setProductDiscount = (req, res) => {
   })
 }
 
-exports.setProductSpecial = (req, res) => {
-  ProductsModel.setProductSpecial(req, (err, user) => {
+exports.getProductDiscounts = (req, res) => {
+  ProductsModel.getProductDiscounts((err, user) => {
     if (err) {
-      user.message = "Add Product Special - Failed";
+      user.message = "Failed";
       res.send(err);
       process.exit(1);
     }
-    user.message = "Add Product Special - Success";
+    user.message = "Success";
+    res.send(user);
+  })
+}
+
+exports.setProductSpecial = (req, res) => {
+  ProductsModel.setProductSpecial(req, (err, employee) => {
+    if (err) {
+      employee.message = "Failed";
+      res.send(err);
+      process.exit(1);
+    }
+    employee.message = "Success";
+    res.send(employee);
+  })
+}
+
+exports.getProductSpecials = (req, res) => {
+  ProductsModel.getProductSpecials((err, user) => {
+    if (err) {
+      user.message = "Failed";
+      res.send(err);
+      process.exit(1);
+    }
+    user.message = "Success";
     res.send(user);
   })
 }
