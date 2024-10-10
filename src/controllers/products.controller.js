@@ -12,8 +12,8 @@ exports.getProducts = (req, res) => {
   })
 }
 
-exports.setProductDiscount = (req, res) => {
-  ProductsModel.setProductDiscount(req, (err, user) => {
+exports.setProductSpecial = (req, res) => {
+  ProductsModel.setProductSpecial(req, (err, user) => {
     if (err) {
       user.message = "Add Product - Failed";
       res.send(err);
@@ -24,8 +24,8 @@ exports.setProductDiscount = (req, res) => {
   })
 }
 
-exports.getProductDiscounts = (req, res) => {
-  ProductsModel.getProductDiscounts((err, user) => {
+exports.getProductSpecials = (req, res) => {
+  ProductsModel.getProductSpecials((err, user) => {
     if (err) {
       user.message = "Failed";
       res.send(err);
@@ -36,8 +36,8 @@ exports.getProductDiscounts = (req, res) => {
   })
 }
 
-exports.setProductSpecial = (req, res) => {
-  ProductsModel.setProductSpecial(req, (err, employee) => {
+exports.setProductGroupSpecial = (req, res) => {
+  ProductsModel.setProductGroupSpecial(req, (err, employee) => {
     if (err) {
       employee.message = "Failed";
       res.send(err);
@@ -48,8 +48,8 @@ exports.setProductSpecial = (req, res) => {
   })
 }
 
-exports.getProductSpecials = (req, res) => {
-  ProductsModel.getProductSpecials((err, user) => {
+exports.getProductGroupSpecials = (req, res) => {
+  ProductsModel.getProductGroupSpecials((err, user) => {
     if (err) {
       user.message = "Failed";
       res.send(err);

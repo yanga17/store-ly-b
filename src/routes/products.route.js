@@ -7,10 +7,10 @@ require('dotenv').config({ path: './configuration.env' });
 
 router.get('/getproducts', ProductsController.getProducts); 
 
-router.post('/setproductdiscount', ProductsController.setProductDiscount);
-router.get('/getproductdiscounts', ProductsController.getProductDiscounts);
-
 router.post('/setproductspecial', ProductsController.setProductSpecial);
 router.get('/getproductspecials', ProductsController.getProductSpecials);
+
+router.post('/setproductgpspecial', ProductsController.setProductGroupSpecial);
+router.get('/getproductgpspecials', ProductsController.getProductGroupSpecials);
 
 module.exports = router;

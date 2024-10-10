@@ -41,34 +41,9 @@ Products.getProducts = (result) => {
     })
 }
 
-Products.setProductDiscount = (req, result) => {
-    const { productID, discountName, discountValue, discountTier, startDate, endDate } = req.body;
-    dbConn.query('INSERT INTO store_loyalty.tbldiscount(ProductID, DiscountName, DiscountValue, DiscountTier, StartDate, EndDate) VALUES(?, ?, ?, ?, ?, ?)', [productID, discountName, discountValue, discountTier, startDate, endDate], (err, res) => {
-        if (err) {
-            console.log('Error while adding the Products discount:' + err);
-            result(err, null);
-        } else {
-            console.log('Adding the Products discount was successful:', res);
-            result(null, res);
-        }
-    });
-}
-
-Products.getProductDiscounts = (result) => {
-    dbConn.query('SELECT d.ProductID, d.DiscountName, d.StartDate, d.EndDate, d.DiscountValue, d.DiscountTier, p.ProductName, p.Price FROM store_loyalty.tbldiscount d JOIN store_loyalty.tblproduct p ON d.ProductID = p.ProductID', (err, res) => {
-        if (!(err === null)) {
-            console.log('Error while getting all products discounts' + err);
-            result(null, err);
-        } else {
-            result(null, res);
-        }
-    })
-}
-
-//take button in loggedTickets table
 Products.setProductSpecial = (req, result) => {
-    const { productID, productCategory, special, specialType, startDate, expiryDate } = req.body;
-    dbConn.query('INSERT INTO store_loyalty.tblspecials (productID, productCategory, special, specialType, startDate, expiryDate) VALUES(?, ?, ?, ?, ?, ?)', [productID, productCategory, special, specialType, startDate, expiryDate], (err, res) => {
+    const { product, specialDescription, specialPrice, specialType, startDate, expiryDate, isActive } = req.body;
+    dbConn.query('insert into store_loyalty.tblproductspecial(Product, SpecialDescription, SpecialPrice, SpecialType, StartDate, ExpiryDate, isActive)values(?, ?, ?, ?, ?, ?, ?)', [product, specialDescription, specialPrice, specialType, startDate, expiryDate, isActive], (err, res) => {
         if (err) {
             console.log('Error while adding the Products special:' + err);
             result(err, null);
@@ -80,6 +55,31 @@ Products.setProductSpecial = (req, result) => {
 }
 
 Products.getProductSpecials = (result) => {
+    dbConn.query('SELECT d.ProductID, d.DiscountName, d.StartDate, d.EndDate, d.DiscountValue, d.DiscountTier, p.ProductName, p.Price FROM store_loyalty.tbldiscount d JOIN store_loyalty.tblproduct p ON d.ProductID = p.ProductID', (err, res) => {
+        if (!(err === null)) {
+            console.log('Error while getting all products discounts' + err);
+            result(null, err);
+        } else {
+            result(null, res);
+        }
+    })
+}
+
+//take button in loggedTickets table
+Products.setProductGroupSpecial = (req, result) => {
+    const { specialGroupID, product, special, specialPrice, specialType, startDate, expiryDate, isActive } = req.body;
+    dbConn.query('insert into store_loyalty.tblproductgroupspecial(SpecialGroupID, Product, Special, SpecialPrice, SpecialType, StartDate, ExpiryDate, isActive) values(?, ?, ?, ?, ?, ?, ?, ?)', [specialGroupID, product, special, specialPrice, specialType, startDate, expiryDate, isActive ], (err, res) => {
+        if (err) {
+            console.log('Error while adding the Products special:' + err);
+            result(err, null);
+        } else {
+            console.log('Adding the Products special was successful:', res);
+            result(null, res);
+        }
+    });
+}
+
+Products.getProductGroupSpecials = (result) => {
     dbConn.query('SELECT ps.ProductID, ps.SpecialName, ps.SpecialValue, ps.StartDate, ps.ExpiryDate, ps.IsActive, p.ProductName, p.Price FROM store_loyalty.tblproductspecial ps JOIN store_loyalty.tblproduct p ON ps.ProductID = p.ProductID', (err, res) => {
         if (!(err === null)) {
             console.log('Error while getting all products specials' + err);
